@@ -7,6 +7,7 @@ import store from './utils/store';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Error from './pages/Error';
+import User from './pages/User';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -19,11 +20,12 @@ root.render(
     <React.StrictMode>
       <Router>
         <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<Error />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/user" element={<User />} />
+            <Route path="*" element={<Error />} />
+          </Routes>
         <Footer />
       </Router>
     </React.StrictMode>

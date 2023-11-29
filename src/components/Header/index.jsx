@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const HeaderDiv = styled.header`
     width: 100%;
-    padding: 5px 20px;
+    padding: 0.35rem 1.25rem;
 `
 const HeaderNav = styled.nav`
     display: flex;
@@ -19,9 +19,10 @@ const HeaderLogo = styled(Link)`
 `
 const HeaderSignIn = styled(Link)`
     display: flex;
+    margin-right: 0.4rem;
     img{
         width: 16px;
-        margin-right: 4px;
+        margin-right: 0.4rem;
     }
 `
 
