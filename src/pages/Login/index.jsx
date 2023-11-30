@@ -1,8 +1,12 @@
 import styled from 'styled-components'
+import { Link } from "react-router-dom"
+import { useDispatch , useSelector } from 'react-redux'
+
 import { colors } from '../../utils/style/GlobalStyle'
 import usercircle  from "../../assets/circle-user-solid.svg"
-import { Link } from "react-router-dom"
 import Button from '../../components/Buttons'
+import { loginUser } from '../../features/login'
+import { fetchUserProfile } from '../../features/userprofile'
 
 const LoginMain = styled.main`
     display: flex;
@@ -54,25 +58,51 @@ const CheckboxDiv = styled.div`
 */
 
 export default function Login() {
+    const dispatch = useDispatch()
+    /*
+    const token = useSelector(state => state.user.token)
+    const errormessage = useSelector(state => state.user.error)
+    const userinfos = useSelector(state => state.profile.infos)
+    */
+
+    const submitForm = (e) => {
+        e.preventDefault()
+        const email = e.target.username.value
+        const password = e.target.password.value
+        dispatch(loginUser({ email, password }))
+        //dispatch(fetchUserProfile( {token} ))
+    }
+    /*
+    const loginTest = () => {
+        console.log(token)
+        console.log(errormessage)
+        console.log(userinfos)
+        console.log("xd")
+    }
+    
+    const fetchInfosTest = () => {
+        dispatch(fetchUserProfile({ token }))
+    }
+    */
     return (
         <LoginMain>
             <LoginSection>
                 <LoginForm>
                     <img src={usercircle} alt="user icon" />
                     <h1>Sign In</h1>
-                    <form>
+                    <form onSubmit={submitForm}>
                         <InputDiv>
-                            <label for="username">Username</label>
-                            <FormInput type="text" placeholder='"Hash-irama"' id="username" required></FormInput>
+                            <label htmlFor="username">Username</label>
+                            <FormInput type="text" placeholder='"Hash-irama"' id="username" ></FormInput>
                         </InputDiv>
                         <InputDiv>
-                            <label for="password">Password</label>
-                            <FormInput type="password" placeholder='***************' id="password" required></FormInput>
+                            <label htmlFor="password">Password</label>
+                            <FormInput type="password" placeholder='***************' id="password" ></FormInput>
                         </InputDiv>
                         <Link to="/user">
                             Sign In
                         </Link>
-                        <Button text="Sign In" />
+                        <Button text="Sign In" type="submit" />
                     </form>
                 </LoginForm>
             </LoginSection>
@@ -80,6 +110,9 @@ export default function Login() {
     )
 }
 /*
+<button onClick={loginTest}>OUIOUIOUI</button>
+<button onClick={fetchInfosTest}>NONNONNON</button>
+
 <CheckboxDiv>
     <input type="checkbox" id="remember-me"></input>
     <label for="remember-me">Remember me</label>

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import AvenirFont from '../../assets/fonts/AvenirRegular.ttf'
 
 const size = {
     mobile: '720px',
@@ -17,14 +18,14 @@ export const colors = {
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
-        font-family: "Avenir";
-        src: url(../../assets/fonts/AvenirRegular.ttf) format("truetype");
+        font-family: 'Avenir';
+        src: url(${AvenirFont}) format('truetype');
     }
     *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: "Avenir", Helvetica, Arial, sans-serif;
+        font-family: 'Avenir', Helvetica, Arial, sans-serif;
     }
     a{
         text-decoration: none;
