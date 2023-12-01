@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchUserProfile = createAsyncThunk('user/profile', async ({ token }) => {
+export const fetchUserProfile = createAsyncThunk('user/profile', async () => {
+    const token = sessionStorage.getItem('jwtToken')
     const response = await fetch('http://localhost:3001/api/v1/user/profile', {
         method: 'POST',
         headers: {
@@ -9,14 +10,13 @@ export const fetchUserProfile = createAsyncThunk('user/profile', async ({ token 
         },
     })
     if (!response.ok) {
-        throw new Error("Fetching Users' profile failed")
+        throw new Error("Retrieval of client's informations failed")
     }
     const data = await response.json()
-    console.log(data.body)
     return data.body
 })
 
-const userFetchinglice = createSlice({
+export const userFetchingSlice = createSlice({
     name:'profile',
     initialState: { infos: null, error: null, status: 'void' },
     reducers: {},
@@ -32,7 +32,7 @@ const userFetchinglice = createSlice({
                 .addCase(fetchUserProfile.rejected, (state, action) => {
                     state.status = 'failed'
                     state.error = action.error.message
-                })
+                })    
         }
 })
-export default userFetchinglice.reducer
+export default userFetchingSlice.reducer

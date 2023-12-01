@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useDispatch , useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import { colors } from '../../utils/style/GlobalStyle'
 import usercircle  from "../../assets/circle-user-solid.svg"
@@ -47,7 +48,13 @@ const FormInput = styled.input`
     padding: 0.35rem;
     font-size: 1.2rem;
 `
-/*
+const ErrorMessage = styled.p`
+   color: red;
+   font-size: 1rem;
+   padding: 0.5rem;
+   margin: 0.5rem;
+   text-align: center;
+`;
 const CheckboxDiv = styled.div`
     display: flex;
     input{
@@ -55,35 +62,33 @@ const CheckboxDiv = styled.div`
         cursor: pointer;
     }
 `
-*/
 
 export default function Login() {
     const dispatch = useDispatch()
-    /*
-    const token = useSelector(state => state.user.token)
-    const errormessage = useSelector(state => state.user.error)
+    const navigate = useNavigate()
+    const loginErrorMessage = useSelector(state => state.user.error)
+    const profileErrorMessage = useSelector(state => state.profile.error)
+    const signinState = useSelector(state => state.user.status)
+    const token = sessionStorage.getItem('jwtToken')
     const userinfos = useSelector(state => state.profile.infos)
-    */
 
     const submitForm = (e) => {
         e.preventDefault()
         const email = e.target.username.value
         const password = e.target.password.value
         dispatch(loginUser({ email, password }))
-        //dispatch(fetchUserProfile( {token} ))
     }
-    /*
-    const loginTest = () => {
-        console.log(token)
-        console.log(errormessage)
-        console.log(userinfos)
-        console.log("xd")
-    }
-    
-    const fetchInfosTest = () => {
-        dispatch(fetchUserProfile({ token }))
-    }
-    */
+
+    // Retrieve user information from data base if token is stored AND if 
+    useEffect(() => {
+        if (token !== null && signinState === 'succeeded') {
+            dispatch(fetchUserProfile(token))
+        }
+        if (userinfos && token && signinState ==='succeeded') {
+            navigate(`/user/${userinfos.userName}`)
+        }
+    }, [token, signinState, userinfos, dispatch, navigate])
+
     return (
         <LoginMain>
             <LoginSection>
@@ -102,19 +107,16 @@ export default function Login() {
                         <Link to="/user">
                             Sign In
                         </Link>
+                        <CheckboxDiv>
+                            <input type="checkbox" id="remember-me"></input>
+                            <label htmlFor="remember-me">Remember me</label>
+                        </CheckboxDiv>
                         <Button text="Sign In" type="submit" />
+                        {loginErrorMessage && <ErrorMessage>{loginErrorMessage}</ErrorMessage>}
+                        {profileErrorMessage && <ErrorMessage>{profileErrorMessage}</ErrorMessage>}
                     </form>
                 </LoginForm>
             </LoginSection>
         </LoginMain>
     )
 }
-/*
-<button onClick={loginTest}>OUIOUIOUI</button>
-<button onClick={fetchInfosTest}>NONNONNON</button>
-
-<CheckboxDiv>
-    <input type="checkbox" id="remember-me"></input>
-    <label for="remember-me">Remember me</label>
-</CheckboxDiv>
-*/

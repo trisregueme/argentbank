@@ -17,16 +17,9 @@ export const loginUser = createAsyncThunk('user/login', async ({ email, password
     return token
 })
 
-const initialState = {
-    user: null,
-    status: 'void',
-    error: null,
-    token: null,
-}
-
 const userLoginSlice = createSlice({
     name:'user',
-    initialState,
+    initialState: { token: null, error: null, status: 'void' },
     reducers: {},
         extraReducers: (builder) => {
             builder
@@ -35,7 +28,8 @@ const userLoginSlice = createSlice({
                 })
                 .addCase(loginUser.fulfilled, (state, action) => {
                     state.status = 'succeeded'
-                    state.token = action.payload
+                    state.error = null
+                    sessionStorage.setItem('jwtToken', action.payload)
                 })
                 .addCase(loginUser.rejected, (state, action) => {
                     state.status = 'failed'

@@ -79,7 +79,7 @@ const HomeContent = styled.section`
     }
 `
 
-export default function Home() {
+export default function Home() { 
     return (
         <main>
             <HeroSection>

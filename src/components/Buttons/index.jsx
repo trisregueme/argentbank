@@ -16,6 +16,6 @@ const GreenButton = styled.button`
     }
 `
 
-export default function Button({ text }) {
-    return <GreenButton>{text}</GreenButton>
+export default function Button({ text, onClick }) {
+    return <GreenButton onClick={onClick}>{text}</GreenButton>
 }
