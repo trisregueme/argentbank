@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import Button from '../../components/Buttons';
 import BankAccount from '../../components/UserAccounts';
 import { modifyUsername } from '../../features/username';
-import { fetchUserProfile } from '../../features/userprofile';
 
 const UserMain = styled.main`
    display: flex;
@@ -103,6 +102,24 @@ export default function User() {
       switchEditMode();
    };
 
+   const accounts = [
+      {
+         name: 'Argent Bank Checking (x8349)',
+         balance: '$2,082.79',
+         message: `Available Balance`,
+      },
+      {
+         name: 'Argent Bank Savings (x6712)',
+         balance: '$10,928.42',
+         message: `Available Balance`,
+      },
+      {
+         name: 'Argent Bank Credit Card (x8349)',
+         balance: '$184.30',
+         message: `Available Balance`,
+      },
+   ];
+
    return (
       <UserMain>
          <UserDiv>
@@ -167,9 +184,21 @@ export default function User() {
                <ErrorMessage>{modifyUsernameError}</ErrorMessage>
             )}
             <UserAccounts>
-               <BankAccount />
-               <BankAccount />
-               <BankAccount />
+               <BankAccount
+                  name={accounts[0].name}
+                  balance={accounts[0].balance}
+                  message={accounts[0].message}
+               />
+               <BankAccount
+                  name={accounts[1].name}
+                  balance={accounts[1].balance}
+                  message={accounts[1].message}
+               />
+               <BankAccount
+                  name={accounts[2].name}
+                  balance={accounts[2].balance}
+                  message={accounts[2].message}
+               />
             </UserAccounts>
          </UserDiv>
       </UserMain>
