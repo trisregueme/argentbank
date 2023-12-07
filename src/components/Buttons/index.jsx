@@ -16,6 +16,6 @@ const GreenButton = styled.button`
     }
 `
 
-export default function Button({ text, onClick }) {
-    return <GreenButton onClick={onClick}>{text}</GreenButton>
+export default function Button({ text, onClick, type, form }) {
+    return <GreenButton onClick={onClick} type={type} form={form}>{text}</GreenButton>
 }

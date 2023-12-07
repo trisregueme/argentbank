@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useDispatch , useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -72,7 +72,7 @@ export default function Login() {
     const token = sessionStorage.getItem('jwtToken')
     const userinfos = useSelector(state => state.profile.infos)
 
-    const submitForm = (e) => {
+    const loginForm = (e) => {
         e.preventDefault()
         const email = e.target.username.value
         const password = e.target.password.value
@@ -82,10 +82,10 @@ export default function Login() {
     // Retrieve user information from data base if token is stored AND if 
     useEffect(() => {
         if (token !== null && signinState === 'succeeded') {
-            dispatch(fetchUserProfile(token))
+            dispatch(fetchUserProfile())
         }
         if (userinfos && token && signinState ==='succeeded') {
-            navigate(`/user/${userinfos.userName}`)
+            navigate(`/user/${userinfos.id}`)
         }
     }, [token, signinState, userinfos, dispatch, navigate])
 
@@ -95,7 +95,7 @@ export default function Login() {
                 <LoginForm>
                     <img src={usercircle} alt="user icon" />
                     <h1>Sign In</h1>
-                    <form onSubmit={submitForm}>
+                    <form onSubmit={loginForm}>
                         <InputDiv>
                             <label htmlFor="username">Username</label>
                             <FormInput type="text" placeholder='"Hash-irama"' id="username" ></FormInput>
@@ -104,9 +104,6 @@ export default function Login() {
                             <label htmlFor="password">Password</label>
                             <FormInput type="password" placeholder='***************' id="password" ></FormInput>
                         </InputDiv>
-                        <Link to="/user">
-                            Sign In
-                        </Link>
                         <CheckboxDiv>
                             <input type="checkbox" id="remember-me"></input>
                             <label htmlFor="remember-me">Remember me</label>
